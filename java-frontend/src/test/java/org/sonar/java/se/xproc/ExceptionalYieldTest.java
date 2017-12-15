@@ -29,6 +29,7 @@ import org.sonar.java.ast.parser.JavaParser;
 import org.sonar.java.bytecode.loader.SquidClassLoader;
 import org.sonar.java.resolve.SemanticModel;
 import org.sonar.java.se.Pair;
+import org.sonar.java.se.SETestUtils;
 import org.sonar.java.se.SymbolicExecutionVisitor;
 import org.sonar.java.se.constraint.BooleanConstraint;
 import org.sonar.java.se.constraint.ObjectConstraint;
@@ -85,7 +86,7 @@ public class ExceptionalYieldTest {
 
   @Test
   public void exceptional_yields() {
-    Pair<SymbolicExecutionVisitor, SemanticModel> sevAndSemantic = createSymbolicExecutionVisitorAndSemantic("src/test/files/se/ExceptionalYields.java");
+    Pair<SymbolicExecutionVisitor, SemanticModel> sevAndSemantic = createSymbolicExecutionVisitorAndSemantic("src/test/files/se/ExceptionalYields.java", SETestUtils.CLASSLOADER);
     SymbolicExecutionVisitor sev = sevAndSemantic.a;
     SemanticModel semanticModel = sevAndSemantic.b;
 
@@ -126,7 +127,7 @@ public class ExceptionalYieldTest {
 
   @Test
   public void exceptional_yields_void_method() {
-    Pair<SymbolicExecutionVisitor, SemanticModel> sevAndSemantic = createSymbolicExecutionVisitorAndSemantic("src/test/files/se/ExceptionalYieldsVoidMethod.java");
+    Pair<SymbolicExecutionVisitor, SemanticModel> sevAndSemantic = createSymbolicExecutionVisitorAndSemantic("src/test/files/se/ExceptionalYieldsVoidMethod.java", SETestUtils.CLASSLOADER);
     SymbolicExecutionVisitor sev = sevAndSemantic.a;
     SemanticModel semanticModel = sevAndSemantic.b;
     MethodBehavior mb = getMethodBehavior(sev, "myVoidMethod");

@@ -296,4 +296,11 @@ public class MethodBehavior {
   public void setDeclaredExceptions(List<String> declaredExceptions) {
     this.declaredExceptions = declaredExceptions;
   }
+
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder(signature + "\n");
+    yields().forEach(y -> sb.append(y).append("\n"));
+    return sb.toString();
+  }
 }

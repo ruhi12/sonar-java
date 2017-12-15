@@ -42,6 +42,9 @@ public class StreamNotConsumedCheck extends SECheck {
 
   @Override
   public void checkEndOfExecutionPath(CheckerContext context, ConstraintManager constraintManager) {
+    if (context.getState().exitingOnRuntimeException()) {
+      return;
+    }
     ProgramState state = context.getState();
     List<SymbolicValue> notConsumed = state.getValuesWithConstraints(NOT_CONSUMED);
     notConsumed.forEach(sv -> {

@@ -55,12 +55,16 @@ public class SETestUtils {
   public static final SquidClassLoader CLASSLOADER = new SquidClassLoader(CLASS_PATH);
 
   public static SymbolicExecutionVisitor createSymbolicExecutionVisitor(String fileName, SECheck... checks) {
-    return createSymbolicExecutionVisitorAndSemantic(fileName, checks).a;
+    return createSymbolicExecutionVisitor(fileName, CLASSLOADER, checks);
   }
-  public static Pair<SymbolicExecutionVisitor, SemanticModel> createSymbolicExecutionVisitorAndSemantic(String fileName, SECheck... checks) {
+
+  public static SymbolicExecutionVisitor createSymbolicExecutionVisitor(String fileName, SquidClassLoader classloader, SECheck... checks) {
+    return createSymbolicExecutionVisitorAndSemantic(fileName, classloader, checks).a;
+  }
+  public static Pair<SymbolicExecutionVisitor, SemanticModel> createSymbolicExecutionVisitorAndSemantic(String fileName, SquidClassLoader classloader, SECheck... checks) {
     File file = new File(fileName);
     CompilationUnitTree cut = (CompilationUnitTree) PARSER.parse(file);
-    SemanticModel semanticModel = SemanticModel.createFor(cut, CLASSLOADER);
+    SemanticModel semanticModel = SemanticModel.createFor(cut, classloader);
     SymbolicExecutionVisitor sev = new SymbolicExecutionVisitor(Arrays.asList(checks), new BehaviorCache(CLASSLOADER));
     sev.scanFile(new DefaultJavaFileScannerContext(cut, file, semanticModel, null, new JavaVersionImpl(8), true));
     return new Pair<>(sev, semanticModel);

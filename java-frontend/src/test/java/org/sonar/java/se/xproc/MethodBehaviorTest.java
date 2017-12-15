@@ -25,6 +25,7 @@ import javax.annotation.Nullable;
 import org.junit.Test;
 import org.sonar.java.resolve.SemanticModel;
 import org.sonar.java.se.Pair;
+import org.sonar.java.se.SETestUtils;
 import org.sonar.java.se.SymbolicExecutionVisitor;
 import org.sonar.java.se.constraint.BooleanConstraint;
 import org.sonar.java.se.constraint.Constraint;
@@ -81,7 +82,7 @@ public class MethodBehaviorTest {
 
   @Test
   public void method_behavior_handling_finally() {
-    Pair<SymbolicExecutionVisitor, SemanticModel> visitorAndSemantic = createSymbolicExecutionVisitorAndSemantic("src/test/resources/se/ReturnAndFinally.java");
+    Pair<SymbolicExecutionVisitor, SemanticModel> visitorAndSemantic = createSymbolicExecutionVisitorAndSemantic("src/test/resources/se/ReturnAndFinally.java", SETestUtils.CLASSLOADER);
     SymbolicExecutionVisitor sev = visitorAndSemantic.a;
     SemanticModel semanticModel = visitorAndSemantic.b;
     assertThat(sev.behaviorCache.behaviors.entrySet()).hasSize(5);

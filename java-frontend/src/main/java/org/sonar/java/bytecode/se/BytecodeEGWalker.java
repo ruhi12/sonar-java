@@ -780,7 +780,8 @@ public class BytecodeEGWalker {
       methodInvokedBehavior
         .exceptionalPathYields()
         .forEach(yield -> {
-          Type exceptionType = yield.exceptionType(semanticModel);
+          Type ex = yield.exceptionType(semanticModel);
+          Type exceptionType = ex == null ? Symbols.unknownType : ex;
           yield.statesAfterInvocation(
             arguments, Collections.emptyList(), programState, () -> constraintManager.createExceptionalSymbolicValue(exceptionType)).forEach(ps -> {
               ps.storeExitValue();
